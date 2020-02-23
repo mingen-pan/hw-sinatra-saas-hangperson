@@ -50,8 +50,10 @@ class HangpersonApp < Sinatra::Base
 
     status = @game.check_win_or_lose
     if status == :win
+      flash[:status] = :win
       redirect '/win'
     elsif status == :lose
+      flash[:status] = :lose
       redirect '/lose'
     end
     if valid == false
@@ -72,12 +74,21 @@ class HangpersonApp < Sinatra::Base
   
   get '/win' do
     ### YOUR CODE HERE ###
-    erb :win # You may change/remove this line
+    if flash[:status] == :win
+      erb :win # You may change/remove this line
+    else
+      redirect '/show'
+    end
+
   end
   
   get '/lose' do
     ### YOUR CODE HERE ###
-    erb :lose # You may change/remove this line
+    if flash[:status] == :lose
+      erb :lose # You may change/remove this line
+    else
+      redirect '/show'
+    end
   end
   
 end
